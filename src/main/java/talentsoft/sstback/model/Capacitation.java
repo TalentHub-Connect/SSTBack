@@ -7,10 +7,10 @@ import lombok.*;
 @Setter
 @Entity
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "events")
-public class Event {
+@AllArgsConstructor
+@Table(name = "capacitation")
+public class Capacitation {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,16 +19,15 @@ public class Event {
     @Column(name = "description", length = 45)
     private String description;
 
+    @Column(name = "capacitationdate", length = 10)
+    private String capacitationDate;
+
     @Column(name = "status", length = 45)
     private String status;
-
-    @Column(name = "dateEvent", length = 10)
-    private String dateEvent;
 
     @Column(name = "place", length = 45)
     private String place;
 
-    @Column(name = "typeeventid", nullable = false)
-    private Integer typeeventid;
-
+    @Column(name = "typecapacitationid", nullable = false)
+    private Integer typeCapacitationId;
 }
