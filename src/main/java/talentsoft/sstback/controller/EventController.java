@@ -3,8 +3,10 @@ package talentsoft.sstback.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import talentsoft.sstback.exception.ErrorDatabaseServiceException;
 import talentsoft.sstback.model.Event;
 import talentsoft.sstback.payload.request.EventRequest;
+import talentsoft.sstback.payload.request.EventUpdateRequest;
 import talentsoft.sstback.service.impl.EventService;
 
 
@@ -13,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/events")
 public class EventController {
-
 
     private final EventService eventService;
 
@@ -43,8 +44,14 @@ public class EventController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Event> updateEvent(@PathVariable Integer id, @RequestBody EventRequest eventRequest) {
-        //eventService.updateEvent(id, eventRequest);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Event> updateEvent(@PathVariable Integer id, @RequestBody EventUpdateRequest eventRequest) throws ErrorDatabaseServiceException {
+       try {
+              if(eventService.updateEvent(id, eventRequest) != null) {
+                  return ResponseEntity.ok(eventService.updateEvent(id, eventRequest));
+              }
+              return ResponseEntity.notFound().build();
+       }catch (ErrorDatabaseServiceException e){
+           return ResponseEntity.status(e.getStatusCode()).build();
+       }
     }
 }

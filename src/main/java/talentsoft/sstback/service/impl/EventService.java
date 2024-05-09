@@ -36,6 +36,7 @@ public class EventService implements IEventService {
     @Override
     public void deleteEvent(Integer id) {
 
+
     }
 
     @Override
@@ -60,11 +61,11 @@ public class EventService implements IEventService {
 
     @Override
     public Event getEventById(Integer id) {
-        return null;
+        return eventRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<Event> getAllEvents() {
-        return List.of();
+        return eventRepository.findAll();
     }
 }

@@ -4,14 +4,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import talentsoft.sstback.exception.ErrorDatabaseServiceException;
 import talentsoft.sstback.model.Capacitation;
 import talentsoft.sstback.payload.request.CapacitationRequest;
 import talentsoft.sstback.payload.request.CapacitationStatusUpdateRequest;
-import talentsoft.sstback.payload.response.CapacitationResponse;
 import talentsoft.sstback.service.impl.CapacitationService;
 
 import java.util.List;
@@ -38,17 +36,10 @@ public class CapacitationController {
     @ApiResponse(responseCode = "200", description = "Capacitation found")
     @ApiResponse(responseCode = "404", description = "Capacitation not found")
     @GetMapping("/{id}")
-    public ResponseEntity<CapacitationResponse> getCapacitationById(@PathVariable Integer id) {
+    public ResponseEntity<Capacitation> getCapacitationById(@PathVariable Integer id) {
         Capacitation capacitation = capacitationService.getCapacitationById(id);
         if (capacitation != null) {
-            return ResponseEntity.ok(CapacitationResponse.builder()
-                    .id(capacitation.getId())
-                    .description(capacitation.getDescription())
-                    .capacitationDate(capacitation.getCapacitationdate())
-                    .status(capacitation.getStatus())
-                    .place(capacitation.getPlace())
-                    .typeCapacitationId(capacitation.getTypecapacitationid())
-                    .build());
+            return ResponseEntity.ok(capacitation);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -56,17 +47,10 @@ public class CapacitationController {
 
     // Agregar una nueva capacitación
     @PostMapping
-    public ResponseEntity<CapacitationResponse> createCapacitation(@RequestBody CapacitationRequest capacitation) {
+    public ResponseEntity<Capacitation> createCapacitation(@RequestBody CapacitationRequest capacitation) {
        try{
               Capacitation newCapacitation = capacitationService.saveCapacitation(capacitation);
-              return ResponseEntity.ok(CapacitationResponse.builder()
-                     .id(newCapacitation.getId())
-                     .description(newCapacitation.getDescription())
-                     .capacitationDate(newCapacitation.getCapacitationdate())
-                     .status(newCapacitation.getStatus())
-                     .place(newCapacitation.getPlace())
-                     .typeCapacitationId(newCapacitation.getTypecapacitationid())
-                     .build());
+              return ResponseEntity.ok(newCapacitation);
        }catch (Exception e){
            return ResponseEntity.badRequest().build();
        }
