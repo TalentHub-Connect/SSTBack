@@ -27,10 +27,10 @@ public class CapacitationService implements ICapacitationService {
         try {
             return capacitationRepository.save(Capacitation.builder()
                     .description(capacitation.getDescription())
-                    .capacitationdate(capacitation.getCapacitationDate())
+                    .capacitationDate(capacitation.getCapacitationDate())
                     .status(capacitation.getStatus())
                     .place(capacitation.getPlace())
-                    .typecapacitationid(capacitation.getTypeCapacitationId())
+                    .typeCapacitationId(capacitation.getTypeCapacitationId())
                     .build());
         } catch (Exception e) {
             throw new ErrorDatabaseServiceException("Error al guardar la capacitación", HttpStatus.BAD_REQUEST.value());

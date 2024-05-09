@@ -12,13 +12,13 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "typeevent")
-public class Typeevent {
+@Table(name = "typeincident")
+public class TypeIncident {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "nameevent", length = 45)
-    private String nameevent;
+    @Column(name = "nameincident", length = 45)
+    private String nameIncident;
 
 }

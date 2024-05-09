@@ -20,7 +20,7 @@ public class Capacitation {
     private String description;
 
     @Column(name = "capacitationdate", length = 10)
-    private String capacitationdate;
+    private String capacitationDate;
 
     @Column(name = "status", length = 45)
     private String status;
@@ -29,5 +29,5 @@ public class Capacitation {
     private String place;
 
     @Column(name = "typecapacitationid", nullable = false)
-    private Integer typecapacitationid;
+    private Integer typeCapacitationId;
 }
