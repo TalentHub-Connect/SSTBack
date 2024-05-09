@@ -1,11 +1,11 @@
 package talentsoft.sstback.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -18,8 +18,5 @@ public class Typeincident {
 
     @Column(name = "nameincident", length = 45)
     private String nameincident;
-
-    @OneToMany(mappedBy = "typeincidentid")
-    private Set<Incident> incidents = new LinkedHashSet<>();
 
 }

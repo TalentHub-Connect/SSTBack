@@ -1,11 +1,11 @@
 package talentsoft.sstback.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -13,20 +13,22 @@ import java.time.LocalTime;
 @Table(name = "incident")
 public class Incident {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @Column(name = "description", length = 45)
     private String description;
 
-    @Column(name = "incidentdate")
-    private LocalDate incidentdate;
+    @Column(name = "incidentdate", length = 10)
+    private String incidentdate;
 
-    @Column(name = "incidenttime")
-    private LocalTime incidenttime;
+    @Column(name = "status", length = 50)
+    private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "typeincidentid", nullable = false)
-    private Typeincident typeincidentid;
+    @Column(name = "typeincidentid", nullable = false)
+    private Integer typeincidentid;
+
+    @Column(name = "employeeid", nullable = false)
+    private Integer employeeid;
+
 }

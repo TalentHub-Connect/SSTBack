@@ -10,13 +10,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "typeevent")
-public class Typeevent {
+@Table(name = "typecapacitation")
+public class Typecapacitation {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "nameevent", length = 45)
-    private String nameevent;
+    @Column(name = "description", length = 45)
+    private String description;
 
 }
