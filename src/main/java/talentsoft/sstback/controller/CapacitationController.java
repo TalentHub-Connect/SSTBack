@@ -3,6 +3,8 @@ package talentsoft.sstback.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import talentsoft.sstback.exception.ErrorDatabaseServiceException;
@@ -48,15 +50,23 @@ public class CapacitationController {
                     .typeCapacitationId(capacitation.getTypecapacitationid())
                     .build());
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     // Agregar una nueva capacitación
     @PostMapping
-    public ResponseEntity<Capacitation> createCapacitation(@RequestBody CapacitationRequest capacitation) {
+    public ResponseEntity<CapacitationResponse> createCapacitation(@RequestBody CapacitationRequest capacitation) {
        try{
-           return ResponseEntity.ok(capacitationService.saveCapacitation(capacitation));
+              Capacitation newCapacitation = capacitationService.saveCapacitation(capacitation);
+              return ResponseEntity.ok(CapacitationResponse.builder()
+                     .id(newCapacitation.getId())
+                     .description(newCapacitation.getDescription())
+                     .capacitationDate(newCapacitation.getCapacitationdate())
+                     .status(newCapacitation.getStatus())
+                     .place(newCapacitation.getPlace())
+                     .typeCapacitationId(newCapacitation.getTypecapacitationid())
+                     .build());
        }catch (Exception e){
            return ResponseEntity.badRequest().build();
        }
@@ -75,7 +85,7 @@ public class CapacitationController {
         }
     }
 
-    // Editar una capacitación (cambiar estado y descripción)
+
     @PutMapping("/{id}/details")
     public ResponseEntity<Capacitation> updateCapacitationDetails(@PathVariable Integer id, @RequestBody Capacitation updates) {
         Capacitation updated = capacitationService.updateCapacitationDetails(id, updates.getStatus(), updates.getDescription());

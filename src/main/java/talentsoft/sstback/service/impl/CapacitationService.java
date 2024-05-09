@@ -63,6 +63,12 @@ public class CapacitationService implements ICapacitationService {
 
     @Override
     public Capacitation updateCapacitationDetails(Integer id, String status, String description) {
+        Capacitation capacitation = capacitationRepository.findById(id).orElse(null);
+        if(capacitation != null){
+            capacitation.setStatus(status);
+            capacitation.setDescription(description);
+            return capacitationRepository.save(capacitation);
+        }
         return null;
     }
 }
