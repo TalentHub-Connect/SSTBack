@@ -22,7 +22,7 @@ public class Event {
     @Column(name = "status", length = 45)
     private String status;
 
-    @Column(name = "dateEvent", length = 10)
+    @Column(name = "date_event", length = 10)
     private String dateEvent;
 
     @Column(name = "place", length = 45)
