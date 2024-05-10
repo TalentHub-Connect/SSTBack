@@ -10,7 +10,4 @@ import lombok.Setter;
 public class EventUpdateRequest {
         private String description;
         private String status;
-        private String dateEvent;
-        private String place;
-        private Integer typeeventid;
 }

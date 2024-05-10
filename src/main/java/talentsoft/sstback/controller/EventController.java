@@ -1,12 +1,14 @@
 package talentsoft.sstback.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import talentsoft.sstback.exception.ErrorDatabaseServiceException;
 import talentsoft.sstback.model.Event;
 import talentsoft.sstback.payload.request.EventRequest;
 import talentsoft.sstback.payload.request.EventUpdateRequest;
+import talentsoft.sstback.payload.request.EventUpdateStatusRequest;
 import talentsoft.sstback.service.impl.EventService;
 
 
@@ -43,15 +45,22 @@ public class EventController {
         return ResponseEntity.ok(eventService.saveEvent(event));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Event> updateEvent(@PathVariable Integer id, @RequestBody EventUpdateRequest eventRequest) throws ErrorDatabaseServiceException {
-       try {
-              if(eventService.updateEvent(id, eventRequest) != null) {
-                  return ResponseEntity.ok(eventService.updateEvent(id, eventRequest));
-              }
-              return ResponseEntity.notFound().build();
-       }catch (ErrorDatabaseServiceException e){
-           return ResponseEntity.status(e.getStatusCode()).build();
-       }
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Event> updateEventStatus(@PathVariable Integer id, @RequestBody EventUpdateStatusRequest updateRequest) {
+        try {
+            return ResponseEntity.ok(eventService.updateEventStatus(id,updateRequest.getStatus()));
+        } catch (ErrorDatabaseServiceException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @PutMapping("/{id}/details")
+    public ResponseEntity<Event> updateEventDetails(@PathVariable Integer id, @RequestBody EventUpdateRequest updates) {
+        Event updated = eventService.updateEventDetails(id, updates.getStatus(), updates.getDescription());
+        if (updated != null) {
+            return ResponseEntity.ok(updated);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
