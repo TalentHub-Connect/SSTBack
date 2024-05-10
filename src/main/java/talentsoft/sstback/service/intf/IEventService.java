@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface IEventService {
     Event saveEvent(EventRequest event);
-    void deleteEvent(Integer id);
-    Event updateEvent(int id, EventUpdateRequest event) throws ErrorDatabaseServiceException;
+    Event updateEventStatus(int id, String status) throws ErrorDatabaseServiceException;
     Event getEventById(Integer id);
     List<Event> getAllEvents();
+    Event updateEventDetails(Integer id, String status, String description);
 }

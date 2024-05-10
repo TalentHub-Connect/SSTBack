@@ -6,10 +6,8 @@ import org.springframework.stereotype.Service;
 import talentsoft.sstback.exception.ErrorDatabaseServiceException;
 import talentsoft.sstback.model.Event;
 import talentsoft.sstback.payload.request.EventRequest;
-import talentsoft.sstback.payload.request.EventUpdateRequest;
 import talentsoft.sstback.repository.EventRepository;
 import talentsoft.sstback.service.intf.IEventService;
-
 import java.util.List;
 
 @Service
@@ -34,29 +32,29 @@ public class EventService implements IEventService {
     }
 
     @Override
-    public void deleteEvent(Integer id) {
-
-
-    }
-
-    @Override
-    public Event updateEvent(int id, EventUpdateRequest updateRequest) throws ErrorDatabaseServiceException {
+    public Event updateEventStatus(int id, String status) throws ErrorDatabaseServiceException {
         try{
             Event event = eventRepository.findById(id).orElse(null);
             if(event != null){
-                return eventRepository.save(Event.builder()
-                        .id(id)
-                        .description(updateRequest.getDescription())
-                        .dateEvent(updateRequest.getDateEvent())
-                        .status(updateRequest.getStatus())
-                        .place(updateRequest.getPlace())
-                        .typeeventid(updateRequest.getTypeeventid())
-                        .build());
+                event.setStatus(status);
+                return eventRepository.save(event);
             }
             return null;
         }catch (Exception e){
             throw new ErrorDatabaseServiceException("Error al actualizar el evento", HttpStatus.BAD_REQUEST.value());
         }
+    }
+
+    @Override
+    public Event updateEventDetails(Integer id, String status, String description) {
+        Event event = eventRepository.findById(id).orElse(null);
+        if(event != null){
+            event.setStatus(status);
+            event.setDescription(description);
+            return eventRepository.save(event);
+        }
+        return null;
+
     }
 
     @Override
@@ -68,4 +66,6 @@ public class EventService implements IEventService {
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
     }
+
+
 }
