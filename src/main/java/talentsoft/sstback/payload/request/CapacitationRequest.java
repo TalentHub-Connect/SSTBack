@@ -13,4 +13,5 @@ public class CapacitationRequest {
     private String status;
     private String place;
     private Integer typeCapacitationId;
+    private Integer companyid;
 }

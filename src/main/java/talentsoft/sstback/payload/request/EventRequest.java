@@ -13,4 +13,5 @@ public class EventRequest {
     private String dateEvent;
     private String place;
     private Integer typeeventid;
+    private Integer companyid;
 }

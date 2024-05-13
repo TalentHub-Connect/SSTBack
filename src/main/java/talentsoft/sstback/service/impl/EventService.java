@@ -28,6 +28,7 @@ public class EventService implements IEventService {
                 .status(event.getStatus())
                 .place(event.getPlace())
                 .typeeventid(event.getTypeeventid())
+                .companyid(event.getCompanyid())
                 .build());
     }
 
@@ -54,7 +55,6 @@ public class EventService implements IEventService {
             return eventRepository.save(event);
         }
         return null;
-
     }
 
     @Override

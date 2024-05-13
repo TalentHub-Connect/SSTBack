@@ -31,4 +31,7 @@ public class Event {
     @Column(name = "typeeventid", nullable = false)
     private Integer typeeventid;
 
+    @Column(name = "companyid", nullable = false)
+    private Integer companyid;
+
 }
