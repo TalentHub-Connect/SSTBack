@@ -13,4 +13,5 @@ public interface IEventService {
     Event getEventById(Integer id);
     List<Event> getAllEvents();
     Event updateEventDetails(Integer id, String status, String description);
+    List<Event> getEventsByCompany(Integer companyId);
 }

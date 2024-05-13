@@ -58,6 +58,15 @@ public class EventService implements IEventService {
     }
 
     @Override
+    public List<Event> getEventsByCompany(Integer companyId) {
+        try {
+            return eventRepository.findByCompanyid(companyId);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     public Event getEventById(Integer id) {
         return eventRepository.findById(id).orElse(null);
     }

@@ -40,6 +40,14 @@ public class EventController {
         }
     }
 
+    @GetMapping("/company/{companyId}")
+    public ResponseEntity<List<Event>> getEventsByCompany(@PathVariable Integer companyId) {
+        if(eventService.getEventsByCompany(companyId) == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(eventService.getEventsByCompany(companyId));
+    }
+
     @PostMapping
     public ResponseEntity<Event> addEvent(@RequestBody EventRequest event) {
         return ResponseEntity.ok(eventService.saveEvent(event));
