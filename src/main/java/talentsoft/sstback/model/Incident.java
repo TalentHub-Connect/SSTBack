@@ -33,4 +33,7 @@ public class Incident {
     @Column(name = "employeeid", nullable = false)
     private Integer employeeid;
 
+    @Column(name = "companyid", nullable = false)
+    private Integer companyid;
+
 }

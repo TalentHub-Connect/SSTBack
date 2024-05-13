@@ -30,6 +30,7 @@ public class IncidentService implements IIncidentService {
                     .status(incident.getStatus())
                     .typeincidentid(incident.getTypeincidentid())
                     .employeeid(incident.getEmployeeid())
+                    .companyid(incident.getCompanyid())
                     .build());
         } catch (Exception e) {
             throw new ErrorDatabaseServiceException("Error al guardar el incidente", HttpStatus.BAD_REQUEST.value());
@@ -55,6 +56,7 @@ public class IncidentService implements IIncidentService {
                 incident.setStatus(incidentRequest.getStatus());
                 incident.setTypeincidentid(incidentRequest.getTypeincidentid());
                 incident.setEmployeeid(incidentRequest.getEmployeeid());
+                incident.setCompanyid(incidentRequest.getCompanyid());
                 return incidentRepository.save(incident);
             }
         }catch (Exception e){

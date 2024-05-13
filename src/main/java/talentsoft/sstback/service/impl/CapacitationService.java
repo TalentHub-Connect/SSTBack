@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 public class CapacitationService implements ICapacitationService {
 
-
     private final CapacitationRepository capacitationRepository;
 
     @Autowired
@@ -29,8 +28,9 @@ public class CapacitationService implements ICapacitationService {
                     .description(capacitation.getDescription())
                     .capacitationDate(capacitation.getCapacitationDate())
                     .status(capacitation.getStatus())
-                    .place(capacitation.getPlace())
+                    .Place(capacitation.getPlace())
                     .typeCapacitationId(capacitation.getTypeCapacitationId())
+                    .CompanyId(capacitation.getCompanyid())
                     .build());
         } catch (Exception e) {
             throw new ErrorDatabaseServiceException("Error al guardar la capacitación", HttpStatus.BAD_REQUEST.value());

@@ -26,8 +26,11 @@ public class Capacitation {
     private String status;
 
     @Column(name = "place", length = 45)
-    private String place;
+    private String Place;
 
     @Column(name = "typecapacitationid", nullable = false)
     private Integer typeCapacitationId;
+
+    @Column(name = "companyid", nullable = false)
+    private Integer CompanyId;
 }
