@@ -1,5 +1,7 @@
 package talentsoft.sstback.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,10 @@ public class EventController {
         return ResponseEntity.ok(eventService.getAllEvents());
     }
 
+    @Operation(summary = "Obtiene un evento por su id")
+    @ApiResponse(responseCode = "200", description = "Evento encontrado")
+    @ApiResponse(responseCode = "404", description = "Evento no encontrado")
+    @ApiResponse(responseCode = "500", description = "Error en la base de datos")
     @GetMapping("/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable Integer id) {
         Event event = eventService.getEventById(id);
@@ -40,6 +46,10 @@ public class EventController {
         }
     }
 
+    @Operation(summary = "Obtiene todos los eventos de una empresa")
+    @ApiResponse(responseCode = "200", description = "Eventos encontrados")
+    @ApiResponse(responseCode = "404", description = "Eventos no encontrados")
+    @ApiResponse(responseCode = "500", description = "Error en la base de datos")
     @GetMapping("/company/{companyId}")
     public ResponseEntity<List<Event>> getEventsByCompany(@PathVariable Integer companyId) {
         if(eventService.getEventsByCompany(companyId) == null){
@@ -48,11 +58,19 @@ public class EventController {
         return ResponseEntity.ok(eventService.getEventsByCompany(companyId));
     }
 
+    @Operation(summary = "Añade un evento")
+    @ApiResponse(responseCode = "200", description = "Evento añadido")
+    @ApiResponse(responseCode = "400", description = "Error al añadir el evento")
+    @ApiResponse(responseCode = "500", description = "Error en la base de datos")
     @PostMapping
     public ResponseEntity<Event> addEvent(@RequestBody EventRequest event) {
         return ResponseEntity.ok(eventService.saveEvent(event));
     }
 
+    @Operation(summary = "Actualiza el estado de un evento")
+    @ApiResponse(responseCode = "200", description = "Evento actualizado")
+    @ApiResponse(responseCode = "400", description = "Error al actualizar el evento")
+    @ApiResponse(responseCode = "404", description = "Evento no encontrado")
     @PutMapping("/{id}/status")
     public ResponseEntity<Event> updateEventStatus(@PathVariable Integer id, @RequestBody EventUpdateStatusRequest updateRequest) {
         try {
@@ -62,6 +80,9 @@ public class EventController {
         }
     }
 
+    @Operation(summary = "Actualiza los detalles de un evento")
+    @ApiResponse(responseCode = "200", description = "Evento actualizado")
+    @ApiResponse(responseCode = "404", description = "Evento no encontrado")
     @PutMapping("/{id}/details")
     public ResponseEntity<Event> updateEventDetails(@PathVariable Integer id, @RequestBody EventUpdateRequest updates) {
         Event updated = eventService.updateEventDetails(id, updates.getStatus(), updates.getDescription());

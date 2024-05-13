@@ -32,9 +32,10 @@ public class CapacitationController {
         return ResponseEntity.ok(capacitationService.getAllCapacitations());
     }
 
-    @Operation(summary = "Get a capacitation by ID")
-    @ApiResponse(responseCode = "200", description = "Capacitation found")
-    @ApiResponse(responseCode = "404", description = "Capacitation not found")
+    @Operation(summary = "Obtener una capacitación por ID")
+    @ApiResponse(responseCode = "200", description = "Capacitation encontrada")
+    @ApiResponse(responseCode = "404", description = "Capacitation no encontrada")
+    @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     @GetMapping("/{id}")
     public ResponseEntity<Capacitation> getCapacitationById(@PathVariable Integer id) {
         Capacitation capacitation = capacitationService.getCapacitationById(id);
@@ -46,6 +47,10 @@ public class CapacitationController {
     }
 
     // Agregar una nueva capacitación
+    @Operation(summary = "Agregar una nueva capacitación")
+    @ApiResponse(responseCode = "200", description = "Capacitation creada exitosamente")
+    @ApiResponse(responseCode = "400", description = "Error al crear la capacitación")
+    @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     @PostMapping
     public ResponseEntity<Capacitation> createCapacitation(@RequestBody CapacitationRequest capacitation) {
        try{
@@ -56,9 +61,10 @@ public class CapacitationController {
        }
     }
 
-    @Operation(summary = "Update the status of a capacitation by ID")
-    @ApiResponse(responseCode = "200", description = "Capacitation updated successfully")
-    @ApiResponse(responseCode = "404", description = "Capacitation not found")
+    @Operation(summary = "Actualiza el estado de una capacitación")
+    @ApiResponse(responseCode = "200", description = "Capacitation actualizada exitosamente")
+    @ApiResponse(responseCode = "404", description = "Capacitation no encontrada")
+    @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     @PutMapping("/{id}")
     public ResponseEntity<Capacitation> updateCapacitationStatus(@PathVariable Integer id, @RequestBody CapacitationStatusUpdateRequest newStatus) throws ErrorDatabaseServiceException {
         Capacitation updated = capacitationService.updateCapacitationStatus(id, newStatus.getStatus());
@@ -69,7 +75,10 @@ public class CapacitationController {
         }
     }
 
-
+    @Operation(summary = "Actualiza los detalles de una capacitación")
+    @ApiResponse(responseCode = "200", description = "Capacitation actualizada exitosamente")
+    @ApiResponse(responseCode = "404", description = "Capacitation no encontrada")
+    @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     @PutMapping("/{id}/details")
     public ResponseEntity<Capacitation> updateCapacitationDetails(@PathVariable Integer id, @RequestBody Capacitation updates) {
         Capacitation updated = capacitationService.updateCapacitationDetails(id, updates.getStatus(), updates.getDescription());
