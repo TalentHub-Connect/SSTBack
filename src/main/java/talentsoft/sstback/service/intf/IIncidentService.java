@@ -12,4 +12,5 @@ public interface IIncidentService {
     Incident updateIncident(int id, IncidentRequest incident) throws ErrorDatabaseServiceException;
     Incident getIncidentById(Integer id);
     List<Incident> getAllIncidents();
+    List<Incident> getIncidentsByCompany(Integer companyId);
 }

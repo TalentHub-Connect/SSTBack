@@ -12,4 +12,5 @@ public interface ICapacitationService {
     List<Capacitation> getAllCapacitations();
     Capacitation updateCapacitationStatus(Integer id, String status) throws ErrorDatabaseServiceException;
     Capacitation updateCapacitationDetails(Integer id, String status, String description);
+    List<Capacitation> getAllCapacitationsByCompany(Integer companyId);
 }

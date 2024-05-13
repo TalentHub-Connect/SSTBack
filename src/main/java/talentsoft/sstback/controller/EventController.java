@@ -27,6 +27,9 @@ public class EventController {
         this.eventService = eventService;
     }
 
+    @Operation(summary = "Obtiene todos los eventos")
+    @ApiResponse(responseCode = "200", description = "Eventos encontrados")
+    @ApiResponse(responseCode = "404", description = "Eventos no encontrados")
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents() {
         return ResponseEntity.ok(eventService.getAllEvents());

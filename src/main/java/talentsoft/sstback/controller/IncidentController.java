@@ -1,5 +1,7 @@
 package talentsoft.sstback.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,10 @@ public class IncidentController {
         this.incidentService = incidentService;
     }
 
+    @Operation(summary = "Obtiene todos los incidentes")
+    @ApiResponse(responseCode = "200", description = "Incidentes encontrados")
+    @ApiResponse(responseCode = "404", description = "Incidentes no encontrados")
+    @ApiResponse(responseCode = "500", description = "Error en la base de datos")
     @GetMapping
     public ResponseEntity<List<Incident>> getAllEvents() {
         return ResponseEntity.ok(incidentService.getAllIncidents());
@@ -30,6 +36,20 @@ public class IncidentController {
         Incident incident = incidentService.getIncidentById(id);
         if (incident != null) {
             return ResponseEntity.ok(incident);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Operation(summary = "Obtiene todos los incidentes de una empresa")
+    @ApiResponse(responseCode = "200", description = "Incidentes encontrados")
+    @ApiResponse(responseCode = "404", description = "Incidentes no encontrados")
+    @ApiResponse(responseCode = "500", description = "Error en la base de datos")
+    @GetMapping("/company/{companyId}")
+    public ResponseEntity<List<Incident>> getIncidentsByCompany(@PathVariable Integer companyId) {
+        List<Incident> incidents = incidentService.getIncidentsByCompany(companyId);
+        if (incidents != null) {
+            return ResponseEntity.ok(incidents);
         } else {
             return ResponseEntity.notFound().build();
         }

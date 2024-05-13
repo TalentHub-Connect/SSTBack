@@ -41,7 +41,10 @@ public class CapacitationService implements ICapacitationService {
     public Capacitation getCapacitationById(Integer id) {
         return capacitationRepository.findById(id).orElse(null);
     }
-
+    @Override
+    public List<Capacitation> getAllCapacitationsByCompany(Integer companyId) {
+        return capacitationRepository.findAllByCompanyId(companyId);
+    }
     @Override
     public List<Capacitation> getAllCapacitations() {
         return capacitationRepository.findAll();
@@ -71,4 +74,6 @@ public class CapacitationService implements ICapacitationService {
         }
         return null;
     }
+
+
 }

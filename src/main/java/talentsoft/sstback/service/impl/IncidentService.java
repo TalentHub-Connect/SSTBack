@@ -37,6 +37,7 @@ public class IncidentService implements IIncidentService {
         }
     }
 
+
     @Override
     public void deleteIncident(Integer id) throws ErrorDatabaseServiceException {
         try {
@@ -66,6 +67,11 @@ public class IncidentService implements IIncidentService {
     }
 
     @Override
+    public List<Incident> getIncidentsByCompany(Integer companyId) {
+        return incidentRepository.findByCompanyid(companyId);
+    }
+
+    @Override
     public Incident getIncidentById(Integer id) {
         return incidentRepository.findById(id).orElse(null);
     }
@@ -74,4 +80,6 @@ public class IncidentService implements IIncidentService {
     public List<Incident> getAllIncidents() {
         return incidentRepository.findAll();
     }
+
+
 }

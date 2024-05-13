@@ -18,7 +18,6 @@ import java.util.List;
 @RequestMapping("/api/capacitations")
 public class CapacitationController {
 
-
     private final CapacitationService capacitationService;
 
     @Autowired
@@ -26,10 +25,20 @@ public class CapacitationController {
         this.capacitationService = capacitationService;
     }
 
-    // Obtener todas las capacitaciones
+    @Operation(summary = "Obtener todas las capacitaciones")
+    @ApiResponse(responseCode = "200", description = "Capacitations encontradas")
+    @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     @GetMapping
     public ResponseEntity<List<Capacitation>> getAllCapacitations() {
         return ResponseEntity.ok(capacitationService.getAllCapacitations());
+    }
+
+    @Operation(summary = "Obtener todas las capacitaciones de una empresa")
+    @ApiResponse(responseCode = "200", description = "Capacitations encontradas")
+    @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    @GetMapping("/company/{companyId}")
+    public ResponseEntity<List<Capacitation>> getAllCapacitationsByCompany(@PathVariable Integer companyId) {
+        return ResponseEntity.ok(capacitationService.getAllCapacitationsByCompany(companyId));
     }
 
     @Operation(summary = "Obtener una capacitación por ID")
@@ -46,7 +55,6 @@ public class CapacitationController {
         }
     }
 
-    // Agregar una nueva capacitación
     @Operation(summary = "Agregar una nueva capacitación")
     @ApiResponse(responseCode = "200", description = "Capacitation creada exitosamente")
     @ApiResponse(responseCode = "400", description = "Error al crear la capacitación")
