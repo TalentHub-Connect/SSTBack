@@ -3,8 +3,6 @@ package talentsoft.sstback.service.intf;
 import talentsoft.sstback.exception.ErrorDatabaseServiceException;
 import talentsoft.sstback.model.Event;
 import talentsoft.sstback.payload.request.EventRequest;
-import talentsoft.sstback.payload.request.EventUpdateRequest;
-
 import java.util.List;
 
 public interface IEventService {

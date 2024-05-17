@@ -12,8 +12,6 @@ import talentsoft.sstback.payload.request.EventRequest;
 import talentsoft.sstback.payload.request.EventUpdateRequest;
 import talentsoft.sstback.payload.request.EventUpdateStatusRequest;
 import talentsoft.sstback.service.impl.EventService;
-
-
 import java.util.List;
 
 @RestController

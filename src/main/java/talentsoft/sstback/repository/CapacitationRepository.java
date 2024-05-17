@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface CapacitationRepository extends JpaRepository<Capacitation, Integer> {
-    @Query("SELECT c FROM Capacitation c WHERE c.CompanyId = ?1")
+    @Query("SELECT c FROM Capacitation c WHERE c.CompanyId = ?1 AND c.status != 'Eliminado'")
     List<Capacitation> findAllByCompanyId(Integer companyId);
+
 }
