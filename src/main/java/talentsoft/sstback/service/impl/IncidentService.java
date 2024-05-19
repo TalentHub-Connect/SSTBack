@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import talentsoft.sstback.exception.ErrorDatabaseServiceException;
 import talentsoft.sstback.model.Incident;
 import talentsoft.sstback.payload.request.IncidentRequest;
+import talentsoft.sstback.payload.request.updateIncidentStatusRequest;
 import talentsoft.sstback.repository.IncidentRepository;
 import talentsoft.sstback.service.intf.IIncidentService;
 
@@ -33,9 +34,10 @@ public class IncidentService implements IIncidentService {
                     .companyid(incident.getCompanyid())
                     .build());
         } catch (Exception e) {
-            throw new ErrorDatabaseServiceException("Error al guardar el incidente", HttpStatus.BAD_REQUEST.value());
+            throw new ErrorDatabaseServiceException(e.getMessage(), HttpStatus.BAD_REQUEST.value());
         }
     }
+
 
 
     @Override
@@ -69,6 +71,16 @@ public class IncidentService implements IIncidentService {
     @Override
     public List<Incident> getIncidentsByCompany(Integer companyId) {
         return incidentRepository.findByCompanyid(companyId);
+    }
+
+    @Override
+    public Incident updateIncidentStatus(Integer id, updateIncidentStatusRequest status) {
+        Incident incident = incidentRepository.findById(id).orElse(null);
+        if (incident != null) {
+            incident.setStatus(status.getStatus());
+            return incidentRepository.save(incident);
+        }
+        return null;
     }
 
     @Override
