@@ -7,12 +7,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class IncidentRequest {
+public class UpdateIncidentRequest {
     private String description;
-    private String incidentdate;
     private String status;
-    private Integer typeincidentid;
-    private Integer employeeid;
-    private Integer companyid;
 }
