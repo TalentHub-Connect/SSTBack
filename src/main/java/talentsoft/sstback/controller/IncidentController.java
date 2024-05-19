@@ -89,7 +89,7 @@ public class IncidentController {
     @ApiResponse(responseCode = "200", description = "Estado del incidente actualizado")
     @ApiResponse(responseCode = "404", description = "Incidente no encontrado")
     @PutMapping("/status/{id}")
-    public ResponseEntity<?> updateIncidentStatus(@PathVariable Integer id, @RequestBody updateIncidentStatusRequest status) {
+    public ResponseEntity<?> updateIncidentStatus(@PathVariable Integer id, @RequestBody updateIncidentStatusRequest status) throws ErrorDatabaseServiceException {
         Incident incident = incidentService.updateIncidentStatus(id, status);
         if (incident != null) {
             return ResponseEntity.ok(incident);
