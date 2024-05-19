@@ -66,6 +66,10 @@ public class IncidentController {
         }
     }
 
+    @Operation(summary = "Actualiza un incidente")
+    @ApiResponse(responseCode = "200", description = "Incidente actualizado")
+    @ApiResponse(responseCode = "404", description = "Incidente no encontrado")
+    @ApiResponse(responseCode = "500", description = "Error en la base de datos")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateIncident(@PathVariable Integer id, @RequestBody IncidentRequest incidentRequest) {
         try {
@@ -80,6 +84,9 @@ public class IncidentController {
         }
     }
 
+    @Operation(summary = "Actualiza el estado de un incidente")
+    @ApiResponse(responseCode = "200", description = "Estado del incidente actualizado")
+    @ApiResponse(responseCode = "404", description = "Incidente no encontrado")
     @PutMapping("/status/{id}")
     public ResponseEntity<?> updateIncidentStatus(@PathVariable Integer id, @RequestBody updateIncidentStatusRequest status) {
         Incident incident = incidentService.updateIncidentStatus(id, status);
