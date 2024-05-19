@@ -82,7 +82,7 @@ public class IncidentController {
     }
 
     @PutMapping("/status/{id}")
-    public ResponseEntity<?> updateIncidentStatus(@PathVariable Integer id, @RequestBody updateIncidentStatusRequest status) {
+    public ResponseEntity<?> updateIncidentStatus(@PathVariable Integer id, @RequestBody updateIncidentStatusRequest status) throws ErrorDatabaseServiceException {
         Incident incident = incidentService.updateIncidentStatus(id, status);
         if (incident != null) {
             return ResponseEntity.ok(incident);

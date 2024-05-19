@@ -59,10 +59,10 @@ public class IncidentService implements IIncidentService {
                 incident.setStatus(incidentRequest.getStatus());
                 return incidentRepository.save(incident);
             }
+            return null;
         }catch (Exception e){
             throw  new ErrorDatabaseServiceException("Error al actualizar el incidente", HttpStatus.BAD_REQUEST.value());
         }
-        return null;
     }
 
     @Override
@@ -71,13 +71,17 @@ public class IncidentService implements IIncidentService {
     }
 
     @Override
-    public Incident updateIncidentStatus(Integer id, updateIncidentStatusRequest status) {
-        Incident incident = incidentRepository.findById(id).orElse(null);
-        if (incident != null) {
-            incident.setStatus(status.getStatus());
-            return incidentRepository.save(incident);
-        }
-        return null;
+    public Incident updateIncidentStatus(Integer id, updateIncidentStatusRequest status) throws ErrorDatabaseServiceException {
+       try {
+              Incident incident = incidentRepository.findById(id).orElse(null);
+              if (incident != null) {
+                incident.setStatus(status.getStatus());
+                return incidentRepository.save(incident);
+              }
+              return null;
+       }catch (Exception e){
+           throw new ErrorDatabaseServiceException("Error al actualizar el estado del incidente", HttpStatus.BAD_REQUEST.value());
+       }
     }
 
     @Override
