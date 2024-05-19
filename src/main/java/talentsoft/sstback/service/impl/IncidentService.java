@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import talentsoft.sstback.exception.ErrorDatabaseServiceException;
 import talentsoft.sstback.model.Incident;
 import talentsoft.sstback.payload.request.IncidentRequest;
+import talentsoft.sstback.payload.request.UpdateIncidentRequest;
 import talentsoft.sstback.payload.request.updateIncidentStatusRequest;
 import talentsoft.sstback.repository.IncidentRepository;
 import talentsoft.sstback.service.intf.IIncidentService;
@@ -50,16 +51,12 @@ public class IncidentService implements IIncidentService {
     }
 
     @Override
-    public Incident updateIncident(int id,IncidentRequest incidentRequest) throws ErrorDatabaseServiceException {
+    public Incident updateIncident(int id, UpdateIncidentRequest incidentRequest) throws ErrorDatabaseServiceException {
         try{
             Incident incident = incidentRepository.findById(id).orElse(null);
             if(incident != null){
                 incident.setDescription(incidentRequest.getDescription());
-                incident.setIncidentdate(incidentRequest.getIncidentdate());
                 incident.setStatus(incidentRequest.getStatus());
-                incident.setTypeincidentid(incidentRequest.getTypeincidentid());
-                incident.setEmployeeid(incidentRequest.getEmployeeid());
-                incident.setCompanyid(incidentRequest.getCompanyid());
                 return incidentRepository.save(incident);
             }
         }catch (Exception e){

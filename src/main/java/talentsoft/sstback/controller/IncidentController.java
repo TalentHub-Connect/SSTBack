@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import talentsoft.sstback.exception.ErrorDatabaseServiceException;
 import talentsoft.sstback.model.Incident;
 import talentsoft.sstback.payload.request.IncidentRequest;
+import talentsoft.sstback.payload.request.UpdateIncidentRequest;
 import talentsoft.sstback.payload.request.updateIncidentStatusRequest;
 import talentsoft.sstback.service.impl.IncidentService;
 
@@ -71,7 +72,7 @@ public class IncidentController {
     @ApiResponse(responseCode = "404", description = "Incidente no encontrado")
     @ApiResponse(responseCode = "500", description = "Error en la base de datos")
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateIncident(@PathVariable Integer id, @RequestBody IncidentRequest incidentRequest) {
+    public ResponseEntity<?> updateIncident(@PathVariable Integer id, @RequestBody UpdateIncidentRequest incidentRequest) {
         try {
             Incident incident = incidentService.updateIncident(id, incidentRequest);
             if (incident != null) {
