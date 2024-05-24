@@ -3,11 +3,14 @@ package talentsoft.sstback.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import talentsoft.sstback.exception.ErrorDatabaseServiceException;
 import talentsoft.sstback.model.Incident;
 import talentsoft.sstback.payload.request.IncidentRequest;
+import talentsoft.sstback.payload.request.UpdateIncidentRequest;
+import talentsoft.sstback.payload.request.updateIncidentStatusRequest;
 import talentsoft.sstback.service.impl.IncidentService;
 
 import java.util.List;
@@ -56,16 +59,16 @@ public class IncidentController {
     }
 
     @PostMapping
-    public ResponseEntity<Incident> addIncident(@RequestBody IncidentRequest incident) throws ErrorDatabaseServiceException {
+    public ResponseEntity<?> addIncident(@RequestBody IncidentRequest incident) {
         try {
             return ResponseEntity.ok(incidentService.saveIncident(incident));
         } catch (ErrorDatabaseServiceException e) {
-            return ResponseEntity.status(e.getStatusCode()).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Incident> updateIncident(@PathVariable Integer id, @RequestBody IncidentRequest incidentRequest) {
+    public ResponseEntity<?> updateIncident(@PathVariable Integer id, @RequestBody UpdateIncidentRequest incidentRequest) {
         try {
             Incident incident = incidentService.updateIncident(id, incidentRequest);
             if (incident != null) {
@@ -77,6 +80,18 @@ public class IncidentController {
             return ResponseEntity.status(e.getStatusCode()).build();
         }
     }
+
+    @PutMapping("/status/{id}")
+    public ResponseEntity<?> updateIncidentStatus(@PathVariable Integer id, @RequestBody updateIncidentStatusRequest status) throws ErrorDatabaseServiceException {
+        Incident incident = incidentService.updateIncidentStatus(id, status);
+        if (incident != null) {
+            return ResponseEntity.ok(incident);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteIncident(@PathVariable Integer id) {
