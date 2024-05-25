@@ -40,7 +40,6 @@ public class IncidentControllerTest {
     @Mock
     private IncidentService incidentService;
 
-
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
