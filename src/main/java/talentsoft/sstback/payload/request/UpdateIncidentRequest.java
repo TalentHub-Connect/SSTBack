@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventUpdateRequest {
-        public String description;
-        public String status;
+public class UpdateIncidentRequest {
+    private String description;
+    private String status;
 }

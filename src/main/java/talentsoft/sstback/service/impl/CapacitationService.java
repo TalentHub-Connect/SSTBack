@@ -45,6 +45,7 @@ public class CapacitationService implements ICapacitationService {
     public List<Capacitation> getAllCapacitationsByCompany(Integer companyId) {
         return capacitationRepository.findAllByCompanyId(companyId);
     }
+
     @Override
     public List<Capacitation> getAllCapacitations() {
         return capacitationRepository.findAll();

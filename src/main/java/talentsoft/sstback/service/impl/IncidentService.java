@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import talentsoft.sstback.exception.ErrorDatabaseServiceException;
 import talentsoft.sstback.model.Incident;
 import talentsoft.sstback.payload.request.IncidentRequest;
+import talentsoft.sstback.payload.request.UpdateIncidentRequest;
+import talentsoft.sstback.payload.request.updateIncidentStatusRequest;
 import talentsoft.sstback.repository.IncidentRepository;
 import talentsoft.sstback.service.intf.IIncidentService;
 
@@ -33,42 +35,57 @@ public class IncidentService implements IIncidentService {
                     .companyid(incident.getCompanyid())
                     .build());
         } catch (Exception e) {
-            throw new ErrorDatabaseServiceException("Error al guardar el incidente", HttpStatus.BAD_REQUEST.value());
+            throw new ErrorDatabaseServiceException(e.getMessage(), HttpStatus.BAD_REQUEST.value());
         }
     }
-
 
     @Override
     public void deleteIncident(Integer id) throws ErrorDatabaseServiceException {
+        if (!incidentRepository.existsById(id)) {
+            throw new ErrorDatabaseServiceException("No se encontró el incidente con ID: " + id, HttpStatus.NOT_FOUND.value());
+        }
         try {
             incidentRepository.deleteById(id);
         } catch (Exception e) {
-            throw new ErrorDatabaseServiceException("Error al eliminar el incidente", HttpStatus.BAD_REQUEST.value());
+            // Considera loggear el error aquí
+            throw new ErrorDatabaseServiceException("Error al eliminar el incidente", HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
     }
 
+
+
     @Override
-    public Incident updateIncident(int id,IncidentRequest incidentRequest) throws ErrorDatabaseServiceException {
+    public Incident updateIncident(int id, UpdateIncidentRequest incidentRequest) throws ErrorDatabaseServiceException {
         try{
             Incident incident = incidentRepository.findById(id).orElse(null);
             if(incident != null){
                 incident.setDescription(incidentRequest.getDescription());
-                incident.setIncidentdate(incidentRequest.getIncidentdate());
                 incident.setStatus(incidentRequest.getStatus());
-                incident.setTypeincidentid(incidentRequest.getTypeincidentid());
-                incident.setEmployeeid(incidentRequest.getEmployeeid());
-                incident.setCompanyid(incidentRequest.getCompanyid());
                 return incidentRepository.save(incident);
             }
+            return null;
         }catch (Exception e){
             throw  new ErrorDatabaseServiceException("Error al actualizar el incidente", HttpStatus.BAD_REQUEST.value());
         }
-        return null;
     }
 
     @Override
     public List<Incident> getIncidentsByCompany(Integer companyId) {
         return incidentRepository.findByCompanyid(companyId);
+    }
+
+    @Override
+    public Incident updateIncidentStatus(Integer id, updateIncidentStatusRequest status) throws ErrorDatabaseServiceException {
+       try {
+              Incident incident = incidentRepository.findById(id).orElse(null);
+              if (incident != null) {
+                incident.setStatus(status.getStatus());
+                return incidentRepository.save(incident);
+              }
+              return null;
+       }catch (Exception e){
+           throw new ErrorDatabaseServiceException("Error al actualizar el estado del incidente", HttpStatus.BAD_REQUEST.value());
+       }
     }
 
     @Override

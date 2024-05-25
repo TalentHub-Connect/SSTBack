@@ -12,8 +12,6 @@ import talentsoft.sstback.payload.request.EventRequest;
 import talentsoft.sstback.payload.request.EventUpdateRequest;
 import talentsoft.sstback.payload.request.EventUpdateStatusRequest;
 import talentsoft.sstback.service.impl.EventService;
-
-
 import java.util.List;
 
 @RestController
@@ -55,11 +53,13 @@ public class EventController {
     @ApiResponse(responseCode = "500", description = "Error en la base de datos")
     @GetMapping("/company/{companyId}")
     public ResponseEntity<List<Event>> getEventsByCompany(@PathVariable Integer companyId) {
-        if(eventService.getEventsByCompany(companyId) == null){
+        List<Event> events = eventService.getEventsByCompany(companyId);
+        if (events.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(eventService.getEventsByCompany(companyId));
+        return ResponseEntity.ok(events);
     }
+
 
     @Operation(summary = "Añade un evento")
     @ApiResponse(responseCode = "200", description = "Evento añadido")
