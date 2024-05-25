@@ -1,13 +1,13 @@
 package talentsoft.sstback.payload.request;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class EventUpdateRequest {
-        private String description;
-        private String status;
+        public String description;
+        public String status;
 }
