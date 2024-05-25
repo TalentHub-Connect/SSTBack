@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Integer> {
-    @Query("SELECT e FROM Event e WHERE e.companyid = ?1 AND e.status != 'Eliminado'")
-    List<Event> findByCompanyid(Integer companyId);
+    @Query("SELECT e FROM Event e WHERE e.companyid = ?1")
+    List<Event> findByCompanyId(Integer companyId);
 }

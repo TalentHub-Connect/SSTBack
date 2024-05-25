@@ -39,16 +39,20 @@ public class IncidentService implements IIncidentService {
         }
     }
 
-
-
     @Override
     public void deleteIncident(Integer id) throws ErrorDatabaseServiceException {
+        if (!incidentRepository.existsById(id)) {
+            throw new ErrorDatabaseServiceException("No se encontró el incidente con ID: " + id, HttpStatus.NOT_FOUND.value());
+        }
         try {
             incidentRepository.deleteById(id);
         } catch (Exception e) {
-            throw new ErrorDatabaseServiceException("Error al eliminar el incidente", HttpStatus.BAD_REQUEST.value());
+            // Considera loggear el error aquí
+            throw new ErrorDatabaseServiceException("Error al eliminar el incidente", HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
     }
+
+
 
     @Override
     public Incident updateIncident(int id, UpdateIncidentRequest incidentRequest) throws ErrorDatabaseServiceException {

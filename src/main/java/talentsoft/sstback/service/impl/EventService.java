@@ -1,5 +1,6 @@
 package talentsoft.sstback.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,8 @@ import talentsoft.sstback.model.Event;
 import talentsoft.sstback.payload.request.EventRequest;
 import talentsoft.sstback.repository.EventRepository;
 import talentsoft.sstback.service.intf.IEventService;
+
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -60,11 +63,12 @@ public class EventService implements IEventService {
     @Override
     public List<Event> getEventsByCompany(Integer companyId) {
         try {
-            return eventRepository.findByCompanyid(companyId);
+            return eventRepository.findByCompanyId(companyId);
         } catch (Exception e) {
-            return null;
+            return Collections.emptyList();
         }
     }
+
 
     @Override
     public Event getEventById(Integer id) {

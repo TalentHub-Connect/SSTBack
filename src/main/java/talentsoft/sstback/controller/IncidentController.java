@@ -72,16 +72,12 @@ public class IncidentController {
     @ApiResponse(responseCode = "404", description = "Incidente no encontrado")
     @ApiResponse(responseCode = "500", description = "Error en la base de datos")
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateIncident(@PathVariable Integer id, @RequestBody UpdateIncidentRequest incidentRequest) {
-        try {
-            Incident incident = incidentService.updateIncident(id, incidentRequest);
-            if (incident != null) {
-                return ResponseEntity.ok(incident);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (ErrorDatabaseServiceException e) {
-            return ResponseEntity.status(e.getStatusCode()).build();
+    public ResponseEntity<?> updateIncident(@PathVariable Integer id, @RequestBody UpdateIncidentRequest incidentRequest) throws ErrorDatabaseServiceException {
+        Incident incident = incidentService.updateIncident(id, incidentRequest);
+        if (incident != null) {
+            return ResponseEntity.ok(incident);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -98,8 +94,6 @@ public class IncidentController {
         }
     }
 
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteIncident(@PathVariable Integer id) {
         try {
@@ -109,8 +103,4 @@ public class IncidentController {
             return ResponseEntity.status(e.getStatusCode()).build();
         }
     }
-
-
-
-
 }
