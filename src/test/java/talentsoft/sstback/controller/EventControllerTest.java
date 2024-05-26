@@ -28,6 +28,7 @@ class EventControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+
     @Autowired
     private ObjectMapper objectMapper;
 
